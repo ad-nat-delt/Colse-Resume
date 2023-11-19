@@ -69,9 +69,17 @@ OpenCV (cv2): OpenCV (Open Source Computer Vision Library) is an open-source com
 
 Installation: pip install opencv-python
 
+```
+pip install opencv-python
+```
+
 NumPy (np): NumPy is a powerful numerical computing library in Python. It is commonly used for working with arrays and matrices, making it useful for various mathematical operations.
 
 Installation: pip install numpy
+
+```
+pip install numpy
+```
 
 ## How to configure
 
