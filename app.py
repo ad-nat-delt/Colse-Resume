@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
 
-# Load the pre-trained Haarcascades face detector
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# Load the pre-trained Caffe model for face detection
+prototxt_path = 'deploy.prototxt'
+caffemodel_path = 'res10_300x300_ssd_iter_140000.caffemodel'
+net = cv2.dnn.readNetFromCaffe(prototxt_path, caffemodel_path)
 
 # Specify the path to the video file
 video_path = 'assets/Times Square.mp4'
@@ -22,26 +24,25 @@ while True:
         print("Error reading video file")
         break
 
-    # Convert the frame to grayscale for face detection
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Resize the frame to a specific width for better performance
+    target_width = 300
+    aspect_ratio = frame.shape[1] / frame.shape[0]
+    target_height = int(target_width / aspect_ratio)
+    frame = cv2.resize(frame, (target_width, target_height))
 
-    # Detect faces in the frame
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30))
+    # Use the Caffe model for face detection
+    blob = cv2.dnn.blobFromImage(frame, 1.0, (target_width, target_height), (104.0, 177.0, 123.0))
+    net.setInput(blob)
+    detections = net.forward()
 
-    # Capture the previous frame for frame differencing
-    prev_frame = gray.copy()
-
-    # Calculate frame difference
-    frame_diff = cv2.absdiff(gray, prev_frame)
-
-    # Detect faces in the frame difference
-    faces_diff = face_cascade.detectMultiScale(frame_diff, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30))
-
-    # Check if faces_diff is non-empty before concatenating
-    if faces_diff:
-        # Combine the faces from Haarcascades and frame differencing
-        faces = np.vstack((faces, faces_diff))
-
+    # Extract faces from the detections
+    faces = []
+    for i in range(detections.shape[2]):
+        confidence = detections[0, 0, i, 2]
+        if confidence > 0.5:  # Adjust confidence threshold as needed
+            box = detections[0, 0, i, 3:7] * np.array([target_width, target_height, target_width, target_height])
+            (startX, startY, endX, endY) = box.astype("int")
+            faces.append((startX, startY, endX - startX, endY - startY))
 
     # Sort faces based on their size (larger faces might be closer)
     faces = sorted(faces, key=lambda f: f[2] * f[3], reverse=True)
