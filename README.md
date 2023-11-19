@@ -18,7 +18,7 @@ Install the required library using:
 
 ## Link to product walkthrough
 
-[link to video](Link Here)
+[link to video](https://youtu.be/5G_-_0U9izc)
 
 ## How it Works ?
 
@@ -60,8 +60,6 @@ This script simulates a depth-based face blurring effect by comparing the sizes 
   <source src="assets/demo.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video> -->
-
-[Click here to watch the demo video](assets/demo.mp4)
 
 ## Libraries used
 
