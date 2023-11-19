@@ -3,11 +3,7 @@ import cv2
 # Load the pre-trained Haarcascades face detector
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Specify the path to the video file
-video_path = 'assets/Times Square.mp4'
-
-# Open the video file
-# cap = cv2.VideoCapture(video_path)
+# Open a video stream using the default camera (change 0 to the appropriate camera index if needed)
 cap = cv2.VideoCapture(0)
 
 while True:
@@ -20,16 +16,16 @@ while True:
     # Detect faces in the frame
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30))
 
-    # Sort faces based on their size (larger faces might be closer)
-    faces = sorted(faces, key=lambda f: f[2] * f[3], reverse=True)
+    # Sort faces based on their y-coordinate (higher y-coordinate means closer to the camera)
+    faces = sorted(faces, key=lambda f: f[1])
 
     # Blur only the people in the background
     for i in range(len(faces) - 1):
         (x1, y1, w1, h1) = faces[i]
         (x2, y2, w2, h2) = faces[i + 1]
 
-        # Check if the face is in the background based on size and position
-        if y1 + h1 < y2 and w1 * h1 > 3000:  # Adjust the size threshold as needed
+        # Check if the face is in the background based on the y-coordinate
+        if y1 + h1 < y2:
             face_roi = frame[y1:y1 + h1, x1:x1 + w1]
             blurred_face = cv2.GaussianBlur(face_roi, (99, 99), 30)
             frame[y1:y1 + h1, x1:x1 + w1] = blurred_face
