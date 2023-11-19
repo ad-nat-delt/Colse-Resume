@@ -1,8 +1,6 @@
 ![Open CV Github Frame](https://github.com/TH-Activities/saturday-hack-night-template/assets/90635335/78554b37-32b2-4488-a10c-5c68098d7776)
 
-# Project Name
-
-Depth-Based Face Blurring with OpenCV
+# Depth-Based Face Blurring with OpenCV
 
 This project demonstrates depth-based face blurring in real-time using OpenCV and the Haarcascades face detection. The script captures video frames from either a video file or a webcam, detects faces, and applies depth-based blurring to faces in the background.
 
@@ -58,10 +56,12 @@ This script simulates a depth-based face blurring effect by comparing the sizes 
 
 ## Demo Video
 
-<video width="640" height="360" controls>
+<!-- <video width="640" height="360" controls>
   <source src="assets/demo.mp4" type="video/mp4">
   Your browser does not support the video tag.
-</video>
+</video> -->
+
+[Click here to watch the demo video](assets/demo.mp4)
 
 ## Libraries used
 
