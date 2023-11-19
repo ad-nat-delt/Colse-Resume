@@ -54,7 +54,7 @@ Exit the Loop:
 The loop continues until the user presses the 'q' key, at which point the script releases the video capture object and closes the window.
 This script simulates a depth-based face blurring effect by comparing the sizes and positions of adjacent faces. Keep in mind that this is a simplified approach and may not accurately represent real-world depth information. For precise depth estimation, specialized depth-sensing cameras or additional information would be required.
 
-<!-- ## Demo Video -->
+## Demo Video
 
 <!-- <video width="640" height="360" controls>
   <source src="assets/demo.mp4" type="video/mp4">
