@@ -82,5 +82,5 @@ No configurations required
 In the terminal run 'python app.py'
 
 ```
-
+python app.py
 ```
